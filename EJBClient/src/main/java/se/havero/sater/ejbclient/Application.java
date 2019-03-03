@@ -6,8 +6,8 @@ import java.util.Properties;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import se.havero.sater.ejbhelloworld.TextProcessorBean;
-import se.havero.sater.ejbhelloworld.TextProcessorRemote;
+import se.havero.sater.ejbhelloworld.LibrarySessionBean;
+import se.havero.sater.ejbhelloworld.LIbrarySessionRemote;
 
 /**
  *
@@ -19,35 +19,35 @@ public class Application {
 
     public static void main(String[] args) throws NamingException {
         
-        TextProcessorRemote textProcessor = EJBFactory
+        LIbrarySessionRemote libararySession = EJBFactory
                 .createTextProcessorBeanFromJNDI("ejb:");
-        System.out.println(textProcessor.processText("sample text"));
-        textProcessor.addBook("Hitch hikers guide to the galaxy");
-        textProcessor.addBook("Cooking book");
-        List<String> shelf = textProcessor.getShelf();
+        System.out.println(libararySession.processText("sample text"));
+        libararySession.addBook("Hitch hikers guide to the galaxy");
+        libararySession.addBook("1983");
+        List<String> shelf = libararySession.getShelf();
         shelf.forEach(s-> System.out.println(s));
         
     }
 
     private static class EJBFactory {
 
-        private static TextProcessorRemote createTextProcessorBeanFromJNDI(String namespace) throws NamingException {
+        private static LIbrarySessionRemote createTextProcessorBeanFromJNDI(String namespace) throws NamingException {
             return lookupTextProcessorBean(namespace);
         }
 
-        private static TextProcessorRemote lookupTextProcessorBean(String namespace) throws NamingException {
+        private static LIbrarySessionRemote lookupTextProcessorBean(String namespace) throws NamingException {
             Context ctx = createInitialContext();
             
             String appName = "";
             //Name of the built jar, war EAP without file extension
             String moduleName = "EJBHelloWorld-1.0-SNAPSHOT";
             String distinctName = "";
-            String beanName = TextProcessorBean.class.getSimpleName();
-            String viewClassName = TextProcessorRemote.class.getName();
+            String beanName = LibrarySessionBean.class.getSimpleName();
+            String viewClassName = LIbrarySessionRemote.class.getName();
             String lookUp= namespace
                     + appName + "/" + moduleName
                     + "/" + distinctName + "/" + beanName + "!" + viewClassName;
-            return (TextProcessorRemote) ctx.lookup(lookUp);
+            return (LIbrarySessionRemote) ctx.lookup(lookUp);
         }
 
         private static Context createInitialContext() throws NamingException {

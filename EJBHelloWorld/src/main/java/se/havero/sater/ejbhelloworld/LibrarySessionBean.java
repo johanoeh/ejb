@@ -15,12 +15,12 @@ import javax.faces.bean.SessionScoped;
  */	
 @Stateless
 @SessionScoped
-public class TextProcessorBean implements TextProcessorRemote {
+public class LibrarySessionBean implements LIbrarySessionRemote {
     
     
     private final List<String> bookShelf;
     
-    public  TextProcessorBean(){
+    public  LibrarySessionBean(){
         this.bookShelf = new ArrayList<>();
     }
     
